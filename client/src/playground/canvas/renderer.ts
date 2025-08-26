@@ -274,17 +274,17 @@ export function drawSquad(
   }
 
   // —— 兵牌/批次/血条（保持你现有逻辑）——
-  const badgeTop = q.side === 'A' ? q.y - 68 : q.y + 4,
+  const badgeTop = q.side === 'A' ? q.y + 8 : q.y - 69,
     textY = badgeTop + 12,
     barY = q.side === 'A' ? q.y - 60 : q.y + 10;
-  // ctx.fillStyle = isHit ? '#f59e0baa' : '#000000aa';
-  // ctx.fillRect(q.x - 10, badgeTop, 20, 16);
-  // ctx.strokeStyle = q.side === 'A' ? '#3b82f6' : '#ef4444';
-  // ctx.strokeRect(q.x - 10 + 0.5, badgeTop + 0.5, 20, 16);
-  // ctx.fillStyle = '#fff';
-  // ctx.font = '12px monospace';
-  // ctx.textAlign = 'center';
-  // ctx.fillText(UNIT[q.type].short, q.x, textY);
+  ctx.fillStyle = isHit ? '#f59e0baa' : '#000000aa';
+  ctx.fillRect(q.x - 10, badgeTop, 20, 16);
+  ctx.strokeStyle = q.side === 'A' ? '#3b82f6' : '#ef4444';
+  ctx.strokeRect(q.x - 10 + 0.5, badgeTop + 0.5, 20, 16);
+  ctx.fillStyle = '#fff';
+  ctx.font = '12px monospace';
+  ctx.textAlign = 'center';
+  ctx.fillText(UNIT[q.type].short, q.x, textY);
 
   const bx = q.x - 35,
     by = badgeTop;
