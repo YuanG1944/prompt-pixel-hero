@@ -22,6 +22,7 @@ const ASSETS = {
   shieldAttackSvg: url('sprites/shield_attack.svg'),
   arrowSvg: url('sprites/arrow.svg'),
   impactSvg: url('sprites/impact_star.svg'),
+  trophyGoldSvg: url('ui/trophy_gold.svg'),
 } as const;
 
 function loadImg(src: string) {
@@ -51,14 +52,13 @@ const PAL_A = {
   C_WHITE: '#ffffff',
   C_SLASH: '#ffeab4',
   C_SLASH_CORE: '#ffffff',
-  C_WOOD: '#8b5a2b', // ★ 新增
-  // ★ 新增箭矢配色（蓝系）
+  C_WOOD: '#8b5a2b',
   C_ARROW: '#93c5fd',
   C_ARROW_HI: '#e5f0ff',
 };
 const PAL_B = {
   ...PAL_A,
-  C_CLOTH: '#ef4444', // ★ 箭矢改红系
+  C_CLOTH: '#ef4444',
   C_ARROW: '#fca5a5',
   C_ARROW_HI: '#ffe5e5',
 };
@@ -103,6 +103,7 @@ export function useArt() {
           shieldAttackSvgRaw,
           arrowSvgRaw,
           impactSvgRaw,
+          trophyGoldSvgRaw,
         ] = await Promise.all([
           loadSvgText(ASSETS.swordsmanWalkSvg),
           loadSvgText(ASSETS.swordsmanAttackSvg),
@@ -121,6 +122,8 @@ export function useArt() {
 
           loadSvgText(ASSETS.arrowSvg),
           loadSvgText(ASSETS.impactSvg),
+
+          loadSvgText(ASSETS.trophyGoldSvg),
         ]);
 
         // 生成 A/B 两套贴图（作为 Image 使用，帧裁切时当成 spritesheet）
@@ -150,6 +153,7 @@ export function useArt() {
           arrowB,
           impactA,
           impactB,
+          trophyGoldSvg,
         ] = await Promise.all([
           svgToImage(tint(swordsmanWalkSvgRaw, PAL_A)),
           svgToImage(tint(swordsmanWalkSvgRaw, PAL_B)),
@@ -180,6 +184,8 @@ export function useArt() {
           svgToImage(tint(arrowSvgRaw, PAL_B)),
           svgToImage(tint(impactSvgRaw, PAL_A)),
           svgToImage(tint(impactSvgRaw, PAL_B)),
+
+          svgToImage(trophyGoldSvgRaw),
         ]);
 
         const a: any = {
@@ -215,6 +221,13 @@ export function useArt() {
           shieldWalkB: shWalkB,
           shieldAttackA: shAtkA,
           shieldAttackB: shAtkB,
+
+          arrowA,
+          arrowB,
+          impactA,
+          impactB,
+
+          trophyGoldSvg,
         };
         if (mounted) setArt(a);
       } catch (e) {

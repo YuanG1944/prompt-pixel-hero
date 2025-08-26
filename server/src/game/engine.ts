@@ -56,8 +56,9 @@ export function createEngine() {
       return last;
     }
     S.state.squads.push(squad);
-    if (side === 'A') S.state.lastSquadA = squad;
-    else S.state.lastSquadB = squad;
+    // 如不再需要，lastSquadA/B 可清空或干脆删除这两个字段
+    if (side === 'A') S.state.lastSquadA = null;
+    else S.state.lastSquadB = null;
     return squad;
   }
 

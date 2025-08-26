@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 96 96">
+  <defs>
+    <linearGradient id="gBody" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0"  stop-color="#fde68a"/>
+      <stop offset="0.45" stop-color="#fbbf24"/>
+      <stop offset="1"  stop-color="#b45309"/>
+    </linearGradient>
+    <linearGradient id="gBase" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#f59e0b"/>
+      <stop offset="1" stop-color="#92400e"/>
+    </linearGradient>
+    <radialGradient id="gHighlight" cx="30%" cy="25%" r="60%">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.9"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- 杯体 -->
+  <g transform="translate(0,2)">
+    <!-- 耳朵/把手 -->
+    <path d="M18,24 c-6,0 -10,6 -10,12 s4,12 10,12 h6 v-6 h-6 c-3,0 -4,-3 -4,-6 s1,-6 4,-6 h6 v-6 z"
+          fill="url(#gBody)"/>
+    <path d="M78,24 c6,0 10,6 10,12 s-4,12 -10,12 h-6 v-6 h6 c3,0 4,-3 4,-6 s-1,-6 -4,-6 h-6 v-6 z"
+          fill="url(#gBody)"/>
+
+    <!-- 主杯体 -->
+    <path d="M24,18 h48 v16 c0,16 -12,28 -24,28 s-24,-12 -24,-28 z"
+          fill="url(#gBody)" stroke="#7c2d12" stroke-width="1.2"/>
+
+    <!-- 杯沿 -->
+    <rect x="22" y="16" width="52" height="6" rx="3" fill="#fcd34d" stroke="#7c2d12" stroke-width="1.2"/>
+
+    <!-- 高光 -->
+    <ellipse cx="40" cy="32" rx="16" ry="12" fill="url(#gHighlight)"/>
+
+    <!-- 颈部与底座 -->
+    <rect x="42" y="62" width="12" height="8" rx="2" fill="#fbbf24" stroke="#7c2d12" stroke-width="1.2"/>
+    <rect x="30" y="72" width="36" height="8" rx="3" fill="url(#gBase)" stroke="#7c2d12" stroke-width="1.2"/>
+    <rect x="24" y="80" width="48" height="10" rx="4" fill="url(#gBase)" stroke="#7c2d12" stroke-width="1.2"/>
+
+    <!-- 小闪光星 -->
+    <g transform="translate(60,26) rotate(-15)">
+      <path d="M0,-5 L1.2,-1.2 L5,0 L1.2,1.2 L0,5 L-1.2,1.2 L-5,0 L-1.2,-1.2 Z" fill="#fff" opacity="0.8"/>
+    </g>
+  </g>
+</svg>

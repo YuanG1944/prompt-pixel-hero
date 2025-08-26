@@ -33,10 +33,21 @@ export type Art = Partial<
     | 'arrowA'
     | 'arrowB'
     | 'impactA'
-    | 'impactB',
+    | 'impactB'
+    | 'trophyGoldSvg',
     HTMLImageElement
   >
 > & { ready: boolean };
+
+// 以 x=pivot 这条竖线为轴做水平镜像，然后执行 draw()
+function mirrorXAbout(ctx: CanvasRenderingContext2D, pivotX: number, draw: () => void) {
+  ctx.save();
+  ctx.translate(pivotX, 0);
+  ctx.scale(-1, 1);
+  ctx.translate(-pivotX, 0);
+  draw();
+  ctx.restore();
+}
 
 function drawSprite(
   ctx: CanvasRenderingContext2D,
@@ -100,7 +111,6 @@ export function drawField(
     ctx.fillRect(s.width / 2, 0, s.width / 2, s.height);
   }
 
-  // ★ 对抗路加宽
   const roadH = 110;
   const roadTop = s.height / 2 - roadH / 2;
   if (art?.road) {
@@ -118,7 +128,6 @@ export function drawField(
     ctx.fillRect(0, roadTop, s.width, roadH);
   }
 
-  // ★ 塔放大
   const scaleTower = 1.35;
   let towerH = 100;
   if (art?.towerA && art?.towerB) {
@@ -143,7 +152,6 @@ export function drawField(
     towerH = 140;
   }
 
-  // 低血量冒烟（保留）
   const smoke = (cx: number, cy: number) => {
     for (let i = 0; i < 4; i++) {
       const t = ((now * 0.001 + i * 0.37) % 1) as number;
@@ -165,7 +173,6 @@ export function drawField(
   if (art?.vignette) ctx.drawImage(art.vignette, 0, 0, s.width, s.height);
 }
 
-// 判断近战是否攻击中（保持你现有逻辑，示意）
 function isMeleeAttacking(s: GameState, q: Squad) {
   const def = UNIT[q.type];
   let dmin = Infinity;
@@ -220,7 +227,6 @@ function drawSwordsmanSpriteSVG(
   ctx.restore();
 }
 
-// ========= 改造 drawSquad：剑士用贴图，其它照旧 =========
 export function drawSquad(
   ctx: CanvasRenderingContext2D,
   q: Squad,
@@ -259,32 +265,11 @@ export function drawSquad(
       const img = atk
         ? pick(art.shieldAttackA, art.shieldAttackB)!
         : pick(art.shieldWalkA, art.shieldWalkB)!;
-      drawSprite(ctx, img, q, now, 1.9);
-    }
-  } else {
-    // 其他兵种：原点阵
-    const baseColor = q.side === 'A' ? '#60a5fa' : '#f87171';
-    const color = isHit ? '#fbbf24' : baseColor;
-    const auraR = Math.min(70, 18 + q.count * 0.6);
-    ctx.save();
-    ctx.globalAlpha = 0.2;
-    ctx.fillStyle = q.side === 'A' ? '#3b82f6' : '#ef4444';
-    ctx.beginPath();
-    ctx.arc(q.x, q.y, auraR, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.restore();
-    const dots = Math.min(q.count, 160),
-      spread = Math.min(64, 10 + q.count * 0.45);
-    for (let i = 0; i < dots; i++) {
-      const jx = (Math.random() - 0.5) * spread,
-        jy = (Math.random() - 0.5) * 22;
-      ctx.fillStyle = color;
-      if (q.side === 'A') ctx.fillRect(q.x + jx, q.y + jy, 2, 2);
-      else {
-        ctx.beginPath();
-        ctx.arc(q.x + jx, q.y + jy, 1.3, 0, Math.PI * 2);
-        ctx.fill();
-      }
+
+      // 当前盾兵朝向反了：统一在这里左右翻转一次
+      mirrorXAbout(ctx, q.x, () => {
+        drawSprite(ctx, img, q, now, 1.9);
+      });
     }
   }
 
@@ -330,122 +315,177 @@ export function drawSquad(
   ctx.fillText(pct, q.x, ty);
 }
 
-export function drawAttackOverlay(ctx: CanvasRenderingContext2D, s: GameState, now: number) {
-  // function nearestEnemy(q: Squad) {
-  //   let e: Squad | null = null,
-  //     dmin = Infinity;
-  //   for (const x of s.squads) {
-  //     if (x.side === q.side) continue;
-  //     const d = Math.abs(x.x - q.x);
-  //     if (d < dmin) {
-  //       dmin = d;
-  //       e = x;
-  //     }
-  //   }
-  //   return { e, dist: dmin };
-  // }
-  // for (const q of s.squads) {
-  //   const def = UNIT[q.type];
-  //   const { e, dist } = nearestEnemy(q);
-  //   if (!e) continue;
-  //   const inRange = dist <= def.rng * CONFIG.RANGE_PX_UNIT;
-  //   if (!inRange) continue;
-  //   const color = q.side === 'A' ? '#93c5fd' : '#fca5a5',
-  //     midx = (q.x + e.x) / 2,
-  //     midy = (q.y + e.y) / 2;
-  //   if (def.rng >= 2) {
-  //     ctx.save();
-  //     ctx.strokeStyle = color;
-  //     ctx.globalAlpha = 0.35;
-  //     ctx.beginPath();
-  //     ctx.moveTo(q.x, q.y);
-  //     ctx.lineTo(e.x, e.y);
-  //     ctx.stroke();
-  //     for (let i = 0; i < 3; i++) {
-  //       const ph = ((now * 0.004 + i * 0.33) % 1) as number;
-  //       const x = q.x + (e.x - q.x) * ph,
-  //         y = q.y + (e.y - q.y) * ph;
-  //       ctx.globalAlpha = 0.7;
-  //       ctx.fillStyle = color;
-  //       ctx.beginPath();
-  //       ctx.arc(x, y, 2, 0, Math.PI * 2);
-  //       ctx.fill();
-  //     }
-  //     ctx.restore();
-  //   } else {
-  //     ctx.save();
-  //     ctx.strokeStyle = color;
-  //     ctx.globalAlpha = 0.5;
-  //     ctx.lineWidth = 1.5;
-  //     const jitter = (v: number) => v + (Math.random() - 0.5) * 8;
-  //     for (let i = 0; i < 2; i++) {
-  //       const dx = Math.sign(e.x - q.x);
-  //       const x1 = jitter(midx - 6 * dx),
-  //         y1 = jitter(midy - 8),
-  //         x2 = jitter(midx + 6 * dx),
-  //         y2 = jitter(midy + 8);
-  //       ctx.beginPath();
-  //       ctx.moveTo(x1, y1);
-  //       ctx.lineTo(x2, y2);
-  //       ctx.stroke();
-  //     }
-  //     ctx.restore();
-  //   }
-  // }
+// 小工具：圆角矩形
+function roundRect(
+  ctx: CanvasRenderingContext2D,
+  x: number,
+  y: number,
+  w: number,
+  h: number,
+  r: number
+) {
+  const rr = Math.min(r, w / 2, h / 2);
+  ctx.beginPath();
+  ctx.moveTo(x + rr, y);
+  ctx.arcTo(x + w, y, x + w, y + h, rr);
+  ctx.arcTo(x + w, y + h, x, y + h, rr);
+  ctx.arcTo(x, y + h, x, y, rr);
+  ctx.arcTo(x, y, x + w, y, rr);
+  ctx.closePath();
 }
+
+export function drawVictoryOverlay(
+  ctx: CanvasRenderingContext2D,
+  s: GameState,
+  winner: 'A' | 'B',
+  art?: Art
+) {
+  ctx.save();
+  ctx.setTransform(1, 0, 0, 1, 0, 0); // 固定在屏幕，不随震屏
+  ctx.imageSmoothingEnabled = false;
+
+  // 面板尺寸（自适应）
+  const panelW = Math.min(520, Math.max(420, s.width * 0.55));
+  const panelH = 260;
+  const x = (s.width - panelW) / 2;
+  const y = (s.height - panelH) / 2;
+
+  // 阴影 + 白底卡片
+  ctx.shadowColor = 'rgba(0,0,0,0.28)';
+  ctx.shadowBlur = 24;
+  ctx.shadowOffsetY = 8;
+
+  ctx.fillStyle = '#ffffff';
+  roundRect(ctx, x, y, panelW, panelH, 16);
+  ctx.fill();
+
+  // 顶部色条
+  ctx.shadowColor = 'transparent';
+  ctx.fillStyle = winner === 'A' ? '#3b82f6' : '#ef4444';
+  roundRect(ctx, x, y, panelW, 10, 16);
+  ctx.fill();
+
+  // 标题
+  ctx.fillStyle = '#0b1222';
+  ctx.font = 'bold 28px ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'top';
+  ctx.fillText(winner === 'A' ? '蓝方胜利' : '红方胜利', x + panelW / 2, y + 28);
+
+  // 副标题
+  ctx.fillStyle = '#475569';
+  ctx.font = '16px ui-sans-serif, system-ui';
+  ctx.fillText(winner === 'A' ? 'Blue Wins' : 'Red Wins', x + panelW / 2, y + 62);
+
+  // ★ 奖杯图标（替换原来的圆）
+  const cx = x + panelW / 2,
+    cy = y + 120;
+  const img = art?.trophyGoldSvg;
+  if (img) {
+    const targetH = 64; // 显示高度
+    const scale = targetH / img.height;
+    const dw = img.width * scale,
+      dh = img.height * scale;
+    ctx.imageSmoothingEnabled = false;
+    ctx.drawImage(img, cx - dw / 2, cy - dh / 2, dw, dh);
+  } else {
+    // 兜底（没加载到图时）
+    ctx.fillStyle = '#fbbf24';
+    ctx.beginPath();
+    ctx.arc(cx, cy, 24, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  // 说明
+  ctx.fillStyle = '#64748b';
+  ctx.font = '14px ui-sans-serif, system-ui';
+  ctx.fillText('点击下方按钮重新开始', x + panelW / 2, y + 160);
+
+  // 按钮（返回其矩形给上层做点击检测）
+  const btnW = 180,
+    btnH = 44;
+  const bx = x + (panelW - btnW) / 2;
+  const by = y + panelH - 24 - btnH;
+
+  // 按钮阴影
+  ctx.shadowColor = 'rgba(0,0,0,0.18)';
+  ctx.shadowBlur = 16;
+  ctx.shadowOffsetY = 6;
+
+  // 按钮本体
+  const btnColor = winner === 'A' ? '#3b82f6' : '#ef4444';
+  ctx.fillStyle = btnColor;
+  roundRect(ctx, bx, by, btnW, btnH, 10);
+  ctx.fill();
+
+  // 按钮文字
+  ctx.shadowColor = 'transparent';
+  ctx.fillStyle = '#ffffff';
+  ctx.font = 'bold 16px ui-sans-serif, system-ui';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('重新开始', bx + btnW / 2, by + btnH / 2);
+
+  ctx.restore();
+  return { button: { x: bx, y: by, w: btnW, h: btnH } };
+}
+
+export function drawAttackOverlay(ctx: CanvasRenderingContext2D, s: GameState, now: number) {}
 
 export function drawBigHealthBars(
   ctx: CanvasRenderingContext2D,
   s: GameState,
-  delayed: { A: number; B: number }
+  delayed: { A: number; B: number },
+  opts?: { lerp?: number }
 ) {
-  const margin = 16,
-    gap = 120,
-    h = 26,
-    y = 12;
-  const sideW = (s.width - margin * 2 - gap) / 2;
-  const curA = clamp01(s.bases.A.hp / CONFIG.BASE_HP),
-    curB = clamp01(s.bases.B.hp / CONFIG.BASE_HP);
-  const delA = clamp01(delayed.A / CONFIG.BASE_HP),
-    delB = clamp01(delayed.B / CONFIG.BASE_HP);
+  const W = s.width,
+    pad = 20,
+    H = 18;
+  const curA = s.bases.A.hp,
+    curB = s.bases.B.hp;
+  const max = CONFIG.BASE_HP;
 
-  ctx.fillStyle = '#0b1222';
-  ctx.fillRect(margin, y, sideW, h);
-  ctx.fillRect(s.width - margin - sideW, y, sideW, h);
-  ctx.fillStyle = '#fde047';
-  if (delA > curA) ctx.fillRect(margin + sideW * curA, y, sideW * (delA - curA), h);
-  if (delB > curB) {
-    const bw = sideW * (delB - curB);
-    ctx.fillRect(s.width - margin - sideW * delB, y, bw, h);
-  }
-  ctx.fillStyle = '#3b82f6';
-  ctx.fillRect(margin, y, sideW * curA, h);
-  ctx.fillStyle = '#ef4444';
-  const bw = sideW * curB;
-  ctx.fillRect(s.width - margin - bw, y, bw, h);
-  ctx.strokeStyle = '#111827';
-  ctx.strokeRect(margin + 0.5, y + 0.5, sideW, h);
-  ctx.strokeRect(s.width - margin - sideW + 0.5, y + 0.5, sideW, h);
+  // 滞后追赶（0.12~0.2 比较自然）
+  const k = opts?.lerp ?? 0.16;
+  delayed.A += (curA - delayed.A) * k;
+  delayed.B += (curB - delayed.B) * k;
 
-  ctx.font = '16px monospace';
-  ctx.textAlign = 'center';
+  const ratioA = clamp01(curA / max);
+  const ratioB = clamp01(curB / max);
+  const delayA = clamp01(delayed.A / max);
+  const delayB = clamp01(delayed.B / max);
+
+  ctx.save();
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.imageSmoothingEnabled = false;
+  ctx.font = '12px monospace';
   ctx.textBaseline = 'middle';
-  ctx.fillStyle = '#e5e7eb';
-  ctx.fillText('VS', s.width / 2, y + h / 2);
 
-  const txtA = `${Math.max(0, Math.round(s.bases.A.hp))}/${CONFIG.BASE_HP} (${Math.round(
-    curA * 100
-  )}%)`;
-  const txtB = `${Math.max(0, Math.round(s.bases.B.hp))}/${CONFIG.BASE_HP} (${Math.round(
-    curB * 100
-  )}%)`;
-  ctx.lineWidth = 3;
-  ctx.strokeStyle = '#0b0f1a';
+  // 背板
+  ctx.fillStyle = '#0b1222dd';
+  ctx.fillRect(pad, pad, W / 2 - pad * 1.5, H);
+  ctx.fillRect(W / 2 + pad * 0.5, pad, W / 2 - pad * 1.5, H);
+
+  // 黄条（滞后）
+  ctx.fillStyle = '#f59e0b';
+  ctx.fillRect(pad, pad, (W / 2 - pad * 1.5) * delayA, H);
+  ctx.fillRect(W - pad - (W / 2 - pad * 1.5) * delayB, pad, (W / 2 - pad * 1.5) * delayB, H);
+
+  // 真实血量（蓝/红）
+  ctx.fillStyle = '#3b82f6';
+  ctx.fillRect(pad, pad, (W / 2 - pad * 1.5) * ratioA, H);
+  ctx.fillStyle = '#ef4444';
+  ctx.fillRect(W - pad - (W / 2 - pad * 1.5) * ratioB, pad, (W / 2 - pad * 1.5) * ratioB, H);
+
+  // 边框+数值
+  ctx.strokeStyle = '#111827';
+  ctx.strokeRect(pad + 0.5, pad + 0.5, W / 2 - pad * 1.5, H);
+  ctx.strokeRect(W / 2 + pad * 0.5 + 0.5, pad + 0.5, W / 2 - pad * 1.5, H);
+
   ctx.fillStyle = '#e5e7eb';
   ctx.textAlign = 'left';
-  ctx.strokeText(txtA, margin + 8, y + h / 2);
-  ctx.fillText(txtA, margin + 8, y + h / 2);
+  ctx.fillText(`${Math.max(0, Math.round(curA))} / ${max}`, pad + 6, pad + H / 2);
   ctx.textAlign = 'right';
-  ctx.strokeText(txtB, s.width - margin - 8, y + h / 2);
-  ctx.fillText(txtB, s.width - margin - 8, y + h / 2);
+  ctx.fillText(`${Math.max(0, Math.round(curB))} / ${max}`, W - pad - 6, pad + H / 2);
+
+  ctx.restore();
 }

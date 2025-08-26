@@ -69,12 +69,6 @@ export default function RightPanel({
               <div>
                 <button style={btn} onClick={() => onRecruit(k, 1)}>
                   +1
-                </button>{' '}
-                <button style={btn} onClick={() => onRecruit(k, 5)}>
-                  +5
-                </button>{' '}
-                <button style={btn} onClick={() => onRecruit(k, 10)}>
-                  +10
                 </button>
               </div>
             </div>
