@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="80" height="120" shape-rendering="crispEdges">
+  <rect width="80" height="120" fill="none"/>
+  <!-- shadow base -->
+  <rect x="10" y="96" width="60" height="8" fill="#0b0f1a" opacity="0.5"/>
+  <!-- body -->
+  <rect x="18" y="30" width="44" height="68" fill="#1e3a8a"/>
+  <rect x="18" y="30" width="44" height="68" fill="none" stroke="#0b1f4b" stroke-width="2"/>
+  <!-- dithering shade -->
+  <g fill="#172c6f">
+    <rect x="18" y="84" width="2" height="14"/>
+    <rect x="22" y="78" width="2" height="20"/>
+    <rect x="26" y="72" width="2" height="26"/>
+    <rect x="30" y="66" width="2" height="32"/>
+    <rect x="34" y="60" width="2" height="38"/>
+  </g>
+  <!-- door -->
+  <rect x="34" y="78" width="12" height="20" fill="#0b1222"/>
+  <rect x="36" y="80" width="8" height="16" fill="#0e162b"/>
+  <!-- battlements -->
+  <rect x="14" y="22" width="52" height="10" fill="#1d4ed8"/>
+  <g fill="#0b1f4b">
+    <rect x="14" y="22" width="52" height="2"/>
+    <rect x="14" y="30" width="52" height="2"/>
+  </g>
+  <g fill="#1d4ed8">
+    <rect x="16" y="16" width="8" height="6"/>
+    <rect x="28" y="16" width="8" height="6"/>
+    <rect x="40" y="16" width="8" height="6"/>
+    <rect x="52" y="16" width="8" height="6"/>
+  </g>
+  <!-- windows -->
+  <g fill="#0e162b">
+    <rect x="24" y="44" width="6" height="8"/>
+    <rect x="50" y="44" width="6" height="8"/>
+  </g>
+  <!-- highlights -->
+  <g fill="#3b82f6" opacity="0.6">
+    <rect x="20" y="34" width="4" height="4"/>
+    <rect x="24" y="38" width="2" height="2"/>
+    <rect x="54" y="36" width="2" height="2"/>
+  </g>
+</svg>

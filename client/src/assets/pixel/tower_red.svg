@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="80" height="120" shape-rendering="crispEdges">
+  <rect width="80" height="120" fill="none"/>
+  <!-- shadow base -->
+  <rect x="10" y="96" width="60" height="8" fill="#0b0f1a" opacity="0.5"/>
+  <!-- cylinder body (pixelated) -->
+  <rect x="22" y="28" width="36" height="70" fill="#7f1d1d"/>
+  <rect x="22" y="28" width="36" height="70" fill="none" stroke="#4a0f0f" stroke-width="2"/>
+  <!-- side shade -->
+  <g fill="#661616">
+    <rect x="22" y="28" width="4" height="70"/>
+    <rect x="54" y="28" width="4" height="70"/>
+  </g>
+  <!-- top cap -->
+  <rect x="18" y="20" width="44" height="10" fill="#b91c1c"/>
+  <g fill="#6b1010">
+    <rect x="18" y="20" width="44" height="2"/>
+    <rect x="18" y="28" width="44" height="2"/>
+  </g>
+  <g fill="#b91c1c">
+    <rect x="20" y="14" width="8" height="6"/>
+    <rect x="32" y="14" width="8" height="6"/>
+    <rect x="44" y="14" width="8" height="6"/>
+  </g>
+  <!-- embrasures -->
+  <g fill="#4a0f0f">
+    <rect x="24" y="44" width="6" height="8"/>
+    <rect x="50" y="44" width="6" height="8"/>
+  </g>
+  <!-- highlights -->
+  <g fill="#f87171" opacity="0.6">
+    <rect x="24" y="32" width="2" height="2"/>
+    <rect x="48" y="34" width="2" height="2"/>
+    <rect x="30" y="38" width="2" height="2"/>
+  </g>
+</svg>

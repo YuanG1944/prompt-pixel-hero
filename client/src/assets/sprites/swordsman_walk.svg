@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="32" viewBox="0 0 128 32">
+  <!-- 4 frames × 32 -->
+  <defs>
+    <g id="char">
+      <!-- legs -->
+      <rect x="14" y="18" width="3" height="8" fill="C_PANTS" />
+      <rect x="19" y="18" width="3" height="8" fill="C_PANTS" />
+      <!-- torso -->
+      <rect x="11" y="10" width="10" height="8" fill="C_CLOTH" />
+      <rect x="11" y="14" width="10" height="1" fill="C_LEATHER" />
+      <rect x="11" y="10" width="10" height="8" fill="none" stroke="C_OUTLINE" stroke-width="1" />
+      <!-- shield (left) -->
+      <circle cx="10" cy="13" r="3.2" fill="C_METAL" stroke="C_OUTLINE" stroke-width="1" />
+      <rect x="8.5" y="12.5" width="3" height="1" fill="C_METAL_DK" />
+      <!-- sword arm (right) - placeholder; the blade is separate -->
+      <rect x="21" y="12" width="2" height="3" fill="C_CLOTH" />
+      <!-- head -->
+      <rect x="14" y="5" width="4" height="5" fill="C_SKIN" stroke="C_OUTLINE" stroke-width="1" />
+      <rect x="13" y="3" width="6" height="3" fill="C_HAIR" stroke="C_OUTLINE" stroke-width="1" />
+    </g>
+    <g id="blade">
+      <rect x="0" y="-1" width="9" height="2" fill="C_METAL" />
+      <rect x="9" y="-1" width="1" height="2" fill="C_WHITE" />
+    </g>
+  </defs>
+
+  <!-- frame 0 -->
+  <g transform="translate(0,0)">
+    <use href="#char" />
+    <g transform="translate(22,13) rotate(-20)">
+      <use href="#blade" />
+    </g>
+  </g>
+
+  <!-- frame 1 -->
+  <g transform="translate(32,0)">
+    <g transform="translate(0,1)">
+      <use href="#char" />
+    </g>
+    <g transform="translate(22,14) rotate(10)">
+      <use href="#blade" />
+    </g>
+  </g>
+
+  <!-- frame 2 -->
+  <g transform="translate(64,0)">
+    <use href="#char" />
+    <g transform="translate(22,12) rotate(-8)">
+      <use href="#blade" />
+    </g>
+  </g>
+
+  <!-- frame 3 -->
+  <g transform="translate(96,0)">
+    <g transform="translate(0,1)">
+      <use href="#char" />
+    </g>
+    <g transform="translate(22,14) rotate(6)">
+      <use href="#blade" />
+    </g>
+  </g>
+</svg>

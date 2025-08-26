@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="32" viewBox="0 0 128 32">
+  <defs>
+    <g id="char">
+      <rect x="14" y="18" width="3" height="8" fill="C_PANTS" />
+      <rect x="19" y="18" width="3" height="8" fill="C_PANTS" />
+      <rect x="11" y="10" width="10" height="8" fill="C_CLOTH" />
+      <rect x="11" y="14" width="10" height="1" fill="C_LEATHER" />
+      <rect x="11" y="10" width="10" height="8" fill="none" stroke="C_OUTLINE" />
+      <rect x="21" y="12" width="2" height="3" fill="C_CLOTH" />
+      <rect x="9" y="12" width="2" height="3" fill="C_CLOTH" />
+      <rect x="14" y="5" width="4" height="5" fill="C_SKIN" stroke="C_OUTLINE" />
+      <rect x="13" y="3" width="6" height="3" fill="C_HAIR" stroke="C_OUTLINE" />
+    </g>
+    <g id="bow">
+      <path d="M8,12 C6,16 6,16 8,20" fill="none" stroke="C_WOOD" stroke-width="2" />
+      <line x1="8" y1="12" x2="8" y2="20" stroke="C_METAL_DK" stroke-width="1" />
+    </g>
+    <g id="arrow">
+      <rect x="0" y="-1" width="8" height="2" fill="C_METAL" />
+      <rect x="7" y="-1" width="1" height="2" fill="C_WHITE" />
+    </g>
+  </defs>
+
+  <!-- 0：拉弓 -->
+  <g transform="translate(0,0)">
+    <use href="#char" />
+    <use href="#bow" />
+    <g transform="translate(8,16)">
+      <use href="#arrow" />
+    </g>
+  </g>
+  <!-- 1：满弓 -->
+  <g transform="translate(32,0)">
+    <use href="#char" />
+    <use href="#bow" />
+    <g transform="translate(8,16)">
+      <use href="#arrow" />
+    </g>
+  </g>
+  <!-- 2：放箭（箭头前移一点点表现释放） -->
+  <g transform="translate(64,0)">
+    <use href="#char" />
+    <use href="#bow" />
+    <g transform="translate(12,16)">
+      <use href="#arrow" />
+    </g>
+  </g>
+  <!-- 3：回位 -->
+  <g transform="translate(96,0)">
+    <use href="#char" />
+    <use href="#bow" />
+  </g>
+</svg>

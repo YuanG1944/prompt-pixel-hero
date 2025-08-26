@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="32" viewBox="0 0 128 32">
+  <defs>
+    <g id="char">
+      <!-- stance legs -->
+      <rect x="13" y="18" width="3" height="8" fill="C_PANTS" />
+      <rect x="20" y="18" width="3" height="8" fill="C_PANTS" />
+      <!-- torso -->
+      <rect x="11" y="10" width="10" height="8" fill="C_CLOTH" />
+      <rect x="11" y="14" width="10" height="1" fill="C_LEATHER" />
+      <rect x="11" y="10" width="10" height="8" fill="none" stroke="C_OUTLINE" stroke-width="1" />
+      <!-- shield -->
+      <circle cx="10" cy="13" r="3.2" fill="C_METAL" stroke="C_OUTLINE" stroke-width="1" />
+      <rect x="8.5" y="12.5" width="3" height="1" fill="C_METAL_DK" />
+      <!-- head -->
+      <rect x="14" y="5" width="4" height="5" fill="C_SKIN" stroke="C_OUTLINE" stroke-width="1" />
+      <rect x="13" y="3" width="6" height="3" fill="C_HAIR" stroke="C_OUTLINE" stroke-width="1" />
+    </g>
+    <g id="blade">
+      <rect x="0" y="-1" width="9" height="2" fill="C_METAL" />
+      <rect x="9" y="-1" width="1" height="2" fill="C_WHITE" />
+    </g>
+    <g id="slash">
+      <path d="M0,0 A12,12 0 0 1 8,8" fill="none" stroke="C_SLASH" stroke-width="3" stroke-linecap="round" />
+      <path d="M2,0 A10,10 0 0 1 8,6" fill="none" stroke="C_SLASH_CORE" stroke-width="1" stroke-linecap="round" />
+    </g>
+  </defs>
+
+  <!-- frame 0: backswing -->
+  <g transform="translate(0,0)">
+    <use href="#char" />
+    <g transform="translate(22,13) rotate(-60)">
+      <use href="#blade" />
+    </g>
+    <g transform="translate(18,6) rotate(-40)">
+      <use href="#slash" />
+    </g>
+  </g>
+
+  <!-- frame 1: mid -->
+  <g transform="translate(32,0)">
+    <use href="#char" />
+    <g transform="translate(22,13) rotate(10)">
+      <use href="#blade" />
+    </g>
+    <g transform="translate(20,8) rotate(0)">
+      <use href="#slash" />
+    </g>
+  </g>
+
+  <!-- frame 2: follow through -->
+  <g transform="translate(64,0)">
+    <use href="#char" />
+    <g transform="translate(22,13) rotate(60)">
+      <use href="#blade" />
+    </g>
+    <g transform="translate(24,10) rotate(40)">
+      <use href="#slash" />
+    </g>
+  </g>
+
+  <!-- frame 3: recover -->
+  <g transform="translate(96,0)">
+    <use href="#char" />
+    <g transform="translate(22,13) rotate(8)">
+      <use href="#blade" />
+    </g>
+  </g>
+</svg>

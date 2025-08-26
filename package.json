@@ -1,0 +1,13 @@
+{
+  "name": "pixel-battle-vite-ts",
+  "private": true,
+  "packageManager": "pnpm@9.6.0",
+  "scripts": {
+    "dev": "concurrently -n SHARED,SERVER,CLIENT -c magenta,green,cyan \"pnpm --filter @pb/shared dev\" \"pnpm --filter @pb/server dev\" \"pnpm --filter @pb/client dev\"",
+    "build": "pnpm -r run build",
+    "start": "pnpm --filter @pb/server start"
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.0"
+  }
+}

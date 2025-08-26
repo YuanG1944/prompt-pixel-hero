@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="16" viewBox="0 0 128 16">
+  <defs>
+    <g id="arrow">
+      <!-- 细杆 -->
+      <rect x="2" y="7" width="22" height="2" fill="C_ARROW" />
+      <!-- 箭头 -->
+      <polygon points="24,4 31,8 24,12" fill="C_ARROW_HI" />
+      <!-- 尾羽 -->
+      <rect x="0" y="6" width="2" height="4" fill="C_ARROW" />
+    </g>
+  </defs>
+
+  <!-- f0 -->
+  <g transform="translate(0,0)">
+    <use href="#arrow" />
+  </g>
+  <!-- f1：轻微上摆 -->
+  <g transform="translate(32,0) rotate(-3,16,8)">
+    <use href="#arrow" />
+  </g>
+  <!-- f2：回中 -->
+  <g transform="translate(64,0)">
+    <use href="#arrow" />
+  </g>
+  <!-- f3：轻微下摆 -->
+  <g transform="translate(96,0) rotate(2,16,8)">
+    <use href="#arrow" />
+  </g>
+</svg>

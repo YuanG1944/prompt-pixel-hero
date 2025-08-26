@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="16" viewBox="0 0 64 16">
+  <defs>
+    <g id="star1">
+      <line x1="0" y1="0" x2="8" y2="0" stroke="C_ARROW_HI" stroke-width="2" stroke-linecap="round" />
+      <line x1="4" y1="-3" x2="4" y2="3" stroke="C_ARROW_HI" stroke-width="2" stroke-linecap="round" />
+    </g>
+    <g id="star2">
+      <line x1="-5" y1="0" x2="5" y2="0" stroke="C_ARROW_HI" stroke-width="2" stroke-linecap="round" />
+      <line x1="0" y1="-3" x2="0" y2="3" stroke="C_ARROW_HI" stroke-width="2" stroke-linecap="round" />
+    </g>
+  </defs>
+
+  <g transform="translate(8,8)">
+    <use href="#star1" />
+  </g>
+  <g transform="translate(24,8) scale(0.9)">
+    <use href="#star2" />
+  </g>
+  <g transform="translate(40,8) scale(0.75)">
+    <use href="#star2" />
+  </g>
+  <g transform="translate(56,8) scale(0.6)">
+    <use href="#star2" />
+  </g>
+</svg>

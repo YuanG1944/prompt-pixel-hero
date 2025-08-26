@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="32" viewBox="0 0 128 32">
+  <defs>
+    <g id="char">
+      <rect x="14" y="18" width="3" height="8" fill="C_PANTS" />
+      <rect x="19" y="18" width="3" height="8" fill="C_PANTS" />
+      <rect x="11" y="10" width="10" height="8" fill="C_CLOTH" />
+      <rect x="11" y="14" width="10" height="1" fill="C_LEATHER" />
+      <rect x="11" y="10" width="10" height="8" fill="none" stroke="C_OUTLINE" />
+      <rect x="21" y="12" width="2" height="3" fill="C_CLOTH" />
+      <rect x="9" y="12" width="2" height="3" fill="C_CLOTH" />
+      <rect x="14" y="5" width="4" height="5" fill="C_SKIN" stroke="C_OUTLINE" />
+      <rect x="13" y="3" width="6" height="3" fill="C_HAIR" stroke="C_OUTLINE" />
+      <!-- 大盾（左侧） -->
+      <rect x="7" y="9" width="4" height="12" fill="C_METAL" stroke="C_OUTLINE" />
+      <rect x="8" y="12" width="2" height="6" fill="C_METAL_DK" />
+    </g>
+  </defs>
+
+  <g transform="translate(0,0)">
+    <use href="#char" />
+  </g>
+  <g transform="translate(32,1)">
+    <use href="#char" />
+  </g>
+  <g transform="translate(64,0)">
+    <use href="#char" />
+  </g>
+  <g transform="translate(96,1)">
+    <use href="#char" />
+  </g>
+</svg>
