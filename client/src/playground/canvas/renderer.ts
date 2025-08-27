@@ -144,7 +144,7 @@ export function drawField(
     ctx.drawImage(art.towerB, s.width - 20 - dbW, s.height / 2 - dbH / 2, dbW, dbH);
   } else {
     ctx.fillStyle = '#1e3a8a';
-    ctx.fillRect(20, s.height / 2 - 70, 56, 140); // 放大降级版
+    ctx.fillRect(20, s.height / 2 - 70, 56, 140);
     ctx.fillStyle = '#7f1d1d';
     ctx.beginPath();
     ctx.ellipse(s.width - 60, s.height / 2, 34, 70, 0, 0, Math.PI * 2);
@@ -254,7 +254,9 @@ export function drawSquad(
       const img = atk
         ? pick(art.archerAttackA, art.archerAttackB)!
         : pick(art.archerWalkA, art.archerWalkB)!;
-      drawSprite(ctx, img, q, now, 1.8);
+      mirrorXAbout(ctx, q.x, () => {
+        drawSprite(ctx, img, q, now, 1.8);
+      });
     } else if (q.type === 'spearman' && art.spearmanWalkA && art.spearmanWalkB) {
       const img = atk
         ? pick(art.spearmanAttackA, art.spearmanAttackB)!

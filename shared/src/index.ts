@@ -57,26 +57,26 @@ export const MSG = {
 export type MsgType = (typeof MSG)[keyof typeof MSG];
 
 export const CONFIG = {
-  WIDTH: 1200,
+  WIDTH: 1280,
   HEIGHT: 420,
   BASE_HP: 2000,
   TICK_MS: 100,
   BROADCAST_MS: 200,
-  GOLD_INTERVAL_MS: 60_000,
-  GOLD_PER_MIN: 100,
+  GOLD_INTERVAL_MS: 1_000,
+  GOLD_PER_MIN: 2,
   AUTO_SPAWN_COUNT: 0,
   PX_PER_MS: 0.06,
   RANGE_PX_UNIT: 28,
   LANE_Y: 420 / 2,
-  START_MONEY: 1000,
+  START_MONEY: 200,
 } as const;
 
 export const UNIT: UnitMap = {
   swordsman: { name: '剑士', short: '剑', hp: 100, atk: 5, def: 10, rng: 1, cost: 10 },
-  archer: { name: '弓箭手', short: '弓', hp: 20, atk: 10, def: 1, rng: 5, cost: 15 },
+  archer: { name: '弓箭手', short: '弓', hp: 20, atk: 15, def: 1, rng: 5, cost: 15 },
   berserker: { name: '狂战士', short: '狂', hp: 150, atk: 20, def: 1, rng: 1, cost: 15 },
-  spearman: { name: '长枪兵', short: '枪', hp: 100, atk: 5, def: 5, rng: 2, cost: 10 },
-  shield: { name: '盾牌手', short: '盾', hp: 200, atk: 0, def: 20, rng: 1, cost: 15 },
+  spearman: { name: '长枪兵', short: '枪', hp: 100, atk: 10, def: 5, rng: 2, cost: 10 },
+  shield: { name: '盾牌手', short: '盾', hp: 200, atk: 0, def: 15, rng: 1, cost: 15 },
 };
 export const UNIT_KEYS: UnitKey[] = ['swordsman', 'archer', 'berserker', 'spearman', 'shield'];
 

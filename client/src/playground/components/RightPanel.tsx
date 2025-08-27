@@ -28,7 +28,7 @@ export default function RightPanel({
         <div style={{ fontSize: 18 }}>
           💰 钱币：<b>{money}</b>
         </div>
-        <div style={{ opacity: 0.7, marginTop: 6 }}>每分钟 +100（不自动出兵）</div>
+        <div style={{ opacity: 0.7, marginTop: 6 }}>每秒中 +2（不自动出兵）</div>
       </div>
       <div style={{ padding: '12px 14px' }}>
         {order.map(k => {
